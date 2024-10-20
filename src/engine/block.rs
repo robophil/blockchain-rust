@@ -46,7 +46,9 @@ impl Block {
         }
     }
 
-    pub fn genesis() -> Self {
+    // fallback block for when mining the genesis (first) block
+    // the real genesis block will be the first block mined, when the blockchain starts up
+    pub fn genesis_sample() -> Self {
         Block {
             index: 0,
             timestamp: Blockchain::get_current_timestamp(),

@@ -42,8 +42,9 @@ impl Blockchain {
 
     pub fn mine_block(&mut self, difficulty: u64, data: Vec<Data>) {
         let start_time = Blockchain::get_current_timestamp();
-        let genesis_block = Block::genesis();
-        let prev_block = self.last_block().unwrap_or(&genesis_block);
+        // fallback block for when mining the genesis (first) block
+        let genesis_block_sample = Block::genesis_sample();
+        let prev_block = self.last_block().unwrap_or(&genesis_block_sample);
         let mut block = Block::new(
             self.len() as u64,
             start_time,
