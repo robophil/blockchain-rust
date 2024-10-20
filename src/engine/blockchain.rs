@@ -31,12 +31,22 @@ impl Blockchain {
         now.timestamp_millis() as u64
     }
 
+    pub fn get_time_elasped(start_time: u64, end_time: u64) -> String {
+        let ms_diff = end_time - start_time;
+        let ms = ms_diff % 1000;
+        let sec = (ms_diff / 1000) % 60;
+        let min = (ms_diff / (1000 * 60)) % 60;
+        let hour = (ms_diff / (1000 * 60 * 60)) % 24;
+        format!("{:02}h:{:02}m:{:02}s.{:03}ms", hour, min, sec, ms)
+    }
+
     pub fn mine_block(&mut self, difficulty: u64, data: Vec<Data>) {
+        let start_time = Blockchain::get_current_timestamp();
         let genesis_block = Block::genesis();
         let prev_block = self.last_block().unwrap_or(&genesis_block);
         let mut block = Block::new(
             self.len() as u64,
-            Blockchain::get_current_timestamp(),
+            start_time,
             prev_block.hash.clone(),
             0,
             data
@@ -47,13 +57,17 @@ impl Blockchain {
             block.nonce += 1;
             hash = block.hash();
         }
+        // log time taken to mine block
+        let end_time = Blockchain::get_current_timestamp();
+        println!("Block {} mined in {} with hash: {}", block.index, Blockchain::get_time_elasped(start_time, end_time), hash);
+        // update block's hash value and add to chain
         block.hash = hash;
         self.add_block(block);
     }
 
-    pub fn log(&self) {
+    pub fn log_blockchain(&self) {
         for block in &self.chain {
-            println!("{:?}", block);
+            println!("No #{}: {:?}", block.index, block);
         }
     }
 }
