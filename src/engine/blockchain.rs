@@ -60,7 +60,7 @@ impl Blockchain {
         }
         // log time taken to mine block
         let end_time = Blockchain::get_current_timestamp();
-        println!("Block {} mined in {} with hash: {}", block.index, Blockchain::get_time_elasped(start_time, end_time), hash);
+        println!("Block {} mined in {} with hash: {}. It contains {} transaction data in it", block.index, Blockchain::get_time_elasped(start_time, end_time), hash, block.data.len());
         // update block's hash value and add to chain
         block.hash = hash;
         self.add_block(block);

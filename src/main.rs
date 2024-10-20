@@ -58,5 +58,6 @@ fn main() {
         }),
     ]);
 
+    println!("Blockchain length: {}", bc.len());
     bc.log_blockchain();
 }
