@@ -1,6 +1,11 @@
 # blockchain-rust
 Simple blockchain implementation in Rust
 
+## Start
+```bash
+Cargo run
+```
+
 ## features
 - Mining with "proof of work".
 - Stores multiple Data types in block. Eg Blob, Transaction.
