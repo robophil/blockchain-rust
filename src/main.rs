@@ -3,9 +3,9 @@ mod engine;
 use crate::engine::{block, blockchain};
 
 fn main() {
-    let mut bc = blockchain::Blockchain::new();
+    let mut bc = blockchain::Blockchain::new(6);
     // mine genesis block
-    bc.mine_block(6, vec![
+    bc.mine_block(vec![
         block::Data::Blob(block::Blob {
             data: String::from("This is the genesis block."),
             timestamp: blockchain::Blockchain::get_current_timestamp(),
@@ -20,7 +20,7 @@ fn main() {
         }),
     ]);
 
-    bc.mine_block(6, vec![
+    bc.mine_block(vec![
         block::Data::Blob(block::Blob {
             data: String::from("Hello, World!"),
             timestamp: blockchain::Blockchain::get_current_timestamp(),
@@ -33,7 +33,7 @@ fn main() {
         }),
     ]);
 
-    bc.mine_block(6, vec![
+    bc.mine_block(vec![
         block::Data::Blob(block::Blob {
             data: String::from("Goodbye, World!"),
             timestamp: blockchain::Blockchain::get_current_timestamp(),

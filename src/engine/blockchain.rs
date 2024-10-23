@@ -4,13 +4,15 @@ use crate::engine::block::{Block, Blocks};
 use super::block::Data;
 
 pub struct Blockchain {
-    chain: Blocks
+    chain: Blocks,
+    difficulty: usize
 }
 
 impl Blockchain {
-    pub fn new() -> Self {
+    pub fn new(difficulty: usize) -> Self {
         Blockchain {
-            chain: vec![]
+            chain: vec![],
+            difficulty
         }
     }
 
@@ -40,7 +42,7 @@ impl Blockchain {
         format!("{:02}h:{:02}m:{:02}s.{:03}ms", hour, min, sec, ms)
     }
 
-    pub fn mine_block(&mut self, difficulty: u64, data: Vec<Data>) {
+    pub fn mine_block(&mut self, data: Vec<Data>) {
         let start_time = Blockchain::get_current_timestamp();
         // fallback block for when mining the genesis (first) block
         let genesis_block_sample = Block::genesis_sample();
@@ -54,7 +56,7 @@ impl Blockchain {
         );
 
         let mut hash = String::from("");
-        while hash.starts_with(&"0".repeat(difficulty as usize)) == false {
+        while hash.starts_with(&"0".repeat(self.difficulty)) == false {
             block.nonce += 1;
             hash = block.hash();
         }
