@@ -1,6 +1,8 @@
 # blockchain-rust
 Simple blockchain implementation in Rust
 
+![image description](img/result.png)
+
 ## Start
 ```bash
 Cargo run
