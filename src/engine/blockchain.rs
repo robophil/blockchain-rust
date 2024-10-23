@@ -20,7 +20,7 @@ impl Blockchain {
         self.chain.push(block);
     }
 
-    pub fn last_block(&self) -> Option<&Block> {
+    pub fn get_last_block(&self) -> Option<&Block> {
         self.chain.last()
     }
 
@@ -46,7 +46,7 @@ impl Blockchain {
         let start_time = Blockchain::get_current_timestamp();
         // fallback block for when mining the genesis (first) block
         let genesis_block_sample = Block::genesis_sample();
-        let prev_block = self.last_block().unwrap_or(&genesis_block_sample);
+        let prev_block = self.get_last_block().unwrap_or(&genesis_block_sample);
         let mut block = Block::new(
             self.len() as u64,
             start_time,
